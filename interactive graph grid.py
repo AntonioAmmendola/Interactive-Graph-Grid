@@ -77,8 +77,7 @@ def local_compl_on_Path(graph, sequence):
 def undo(event):
     global G, node_colors, stack, selected_nodes,mesure
     if stack:
-        #stack[-1][0]
-        G, node_colors, selected_nodes,mesure = stack.pop()
+        G, node_colors, selected_nodes, measurements = stack.pop()
         ax.clear()
         draw_grid_graph(G, N)
         plt.draw()
@@ -92,14 +91,10 @@ def neighbors(graph, n):
 # Funzione per stampare e visualizzare per visualizare tutte le misure effetuate
 def estraction_mesure(event):
     print("le misure effetuate sono:",mesure)
-    mesurecopy.set_text(f'{mesure}')  # Aggiorna il testo visualizzato
+    mesurecopy.set_text(f'{mesure}')  # new text
+    plt.draw()
 
 
-# # Funzione per attivare la modalità neighbors
-# def activate_neighbors(event):
-#     global neighbors_active
-#     neighbors_active = True
-#     print("Modalità neighbors attivata")
 
 # Funzione per trovare tutti i cammini tra due nodi
 def find_good_paths(graph, source, target):
@@ -146,18 +141,6 @@ def copy_to_clipboard(event):
 
 
 
-
-
-
-
-
-# # Funzione per attivare la modalità di selezione dei nodi per il percorso
-# def activate_path_mode(event):
-#     global path_mode_active
-#     path_mode_active = True
-#     selected_nodes.clear()
-#     print("Modalità di selezione del percorso attivata")
-
 N = 10
 G = nx.grid_2d_graph(N, N)
 G0=G.copy()
@@ -203,27 +186,6 @@ def on_click(event):
         if node is not None:
             print(f"Hai selezionato il nodo {label_map[node]}")
 
-            
-            # # Modalità "neighbors"
-            # if neighbors_active:
-            #     neighbors(G, node)
-            #     neighbors_active = False
-            #     return  # Esce dalla funzione per evitare altre operazioni
-
-            # # Modalità percorso
-            # if path_mode_active:
-            #     selected_nodes.append(node)
-            #     node_colors[node] = 'purple'
-            #     draw_grid_graph(G, N)
-            #     plt.draw()
-
-            #     if len(selected_nodes) == 2:
-            #         find_good_paths(G, selected_nodes[0], selected_nodes[1])
-            #         path_mode_active = False
-            #         selected_nodes.clear()
-            #     return
-
-            # Funzione selezionata dall'utente
             if current_function == local_compl_on_Path:
                 if selected_nodes and node == selected_nodes[0]:
                     selected_nodes.append(node)
